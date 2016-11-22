@@ -1,0 +1,9 @@
+SD_ShinonomeFNT_Pack	KEYWORD1
+SD_Shinonome_Init	KEYWORD2
+ShinonomeFNTread_ALL	KEYWORD2
+SjisShinonomeFNTread_ALL	KEYWORD2
+SjisToShinonome16FontRead	KEYWORD2
+SjisToShinonome16FontRead_ALL	KEYWORD2
+SjisToShinonomeFNTadrs	KEYWORD2
+SD_Flash_ShinonomeFNTread_FHN	KEYWORD2
+SD_Flash_ShinonomeFNTread_Harf_FHN	KEYWORD2
