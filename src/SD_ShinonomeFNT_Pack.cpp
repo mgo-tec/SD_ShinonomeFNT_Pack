@@ -113,13 +113,11 @@ uint8_t SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead(File f1, File f2, uint8_
   uint8_t cp;
   
   if((jisH>=0x20 && jisH<=0x7E) || (jisH>=0xA1 && jisH<=0xDF)){
-    
     if(jisH<=0x63) fnt_adrs_half = 0x1346+(jisH-0x20)*126;
     else if(jisH<=0x7E) fnt_adrs_half = 0x34BF+(jisH-0x64)*127;
     else if(jisH>=0xA1) fnt_adrs_half = 0x4226+(jisH-0xA1)*129;
 
     SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_Harf_FHN(f2, fnt_adrs_half, buf1);
-    
     cp = 1;
     
     if((jisL>=0x20 && jisL<=0x7E) || (jisL>=0xA1 && jisL<=0xDF)){
@@ -128,10 +126,8 @@ uint8_t SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead(File f1, File f2, uint8_
       else if(jisL>=0xA1) fnt_adrs_half = 0x4226+(jisL-0xA1)*129;
       
       SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_Harf_FHN(f2, fnt_adrs_half, buf2);
-      
       cp = 2;
     }else{
-      
       cp = 1;
     }
   }else{
@@ -160,6 +156,7 @@ void SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(File f1, File f2, uint8
       else if(Sjis[i]>=0xA1) fnt_adrs_half = 0x4226+(Sjis[i]-0xA1)*129;
 
       SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_Harf_FHN(f2, fnt_adrs_half, font_buf[i]);
+
       if(Sjis[i+1] < 0x20) Sjis[i+1] = 0x20; //制御コードは全てスペース
       if((Sjis[i+1]>=0x20 && Sjis[i+1]<=0x7E) || (Sjis[i+1]>=0xA1 && Sjis[i+1]<=0xDF)){
         if(Sjis[i+1]<=0x63) fnt_adrs_half = 0x1346+(Sjis[i+1]-0x20)*126;
@@ -167,12 +164,10 @@ void SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(File f1, File f2, uint8
         else if(Sjis[i+1]>=0xA1) fnt_adrs_half = 0x4226+(Sjis[i+1]-0xA1)*129;
 
         SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_Harf_FHN(f2, fnt_adrs_half, font_buf[i+1]);
-
         i = i+2;
       }else{
         i++;
       }
-      
     }else{
       SD_ShinonomeFNT_Pack::SjisToShinonomeFNTadrs(Sjis[i], Sjis[i+1], &fnt_adrs_Zen);
       SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_FHN(f1, fnt_adrs_Zen, font_buf[i], font_buf[i+1]);
@@ -254,7 +249,6 @@ void SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_FHN(File ff, uint32_t addrs
     ff.seek(addrs);
     ff.read(c,80); //4byte+"." -->5byte*16=80byte
     for (i=0; i<16; i++){
-
       if(c[j]>=0x61) c1 = (c[j]-0x61)+10;
       else c1 = c[j]-0x30;
       if(c[j+1]>=0x61) c2 = (c[j+1]-0x61)+10;
@@ -267,7 +261,6 @@ void SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_FHN(File ff, uint32_t addrs
       buf1[i] = (c1<<4)|c2;
       buf2[i] = (c3<<4)|c4;
       j=j+5;
-
     }
   }else{
     Serial.println(F(" shinonome file has not been uploaded to the flash in SD file system"));
@@ -288,16 +281,13 @@ void SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_Harf_FHN(File ff, uint32_t 
     ff.seek(addrs);
     ff.read(c,48); //2byte+"." -->3byte*16=48byte
     for (i=0; i<16; i++){
-
       if(c[j]>=0x61) c1 = (c[j]-0x61)+10;
       else c1 = c[j]-0x30;
       if(c[j+1]>=0x61) c2 = (c[j+1]-0x61)+10;
       else c2 = c[j+1]-0x30;
 
       buf[i] = (c1<<4)|c2;
-
       j=j+3;
-
     }
   }else{
     Serial.println(F(" Shinonome file has not been uploaded to the flash in SD file system"));
