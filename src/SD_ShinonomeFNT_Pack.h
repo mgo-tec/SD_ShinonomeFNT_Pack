@@ -42,23 +42,23 @@ class SD_ShinonomeFNT_Pack
 {
 public:
   SD_ShinonomeFNT_Pack(uint8_t cs, uint16_t MaxTxt);
-	
+  
   void SD_Shinonome_Init(const char* UTF8SJIS_file, const char* Shino_Half_Font_file, const char* Shino_Zen_Font_file);
-	uint16_t ShinonomeFNTread_ALL(String str, uint8_t font_buf[][16]);
-	uint16_t SjisShinonomeFNTread_ALL(String str, uint8_t* sj_code, uint8_t font_buf[][16]);
-	uint8_t SjisToShinonome16FontRead(File f1, File f2, uint8_t Direction, int16_t Angle, uint8_t jisH, uint8_t jisL, uint8_t* buf1, uint8_t* buf2);
+  uint16_t ShinonomeFNTread_ALL(String str, uint8_t font_buf[][16]);
+  uint16_t SjisShinonomeFNTread_ALL(String str, uint8_t* sj_code, uint8_t font_buf[][16]);
+  uint8_t SjisToShinonome16FontRead(File f1, File f2, uint8_t Direction, int16_t Angle, uint8_t jisH, uint8_t jisL, uint8_t* buf1, uint8_t* buf2);
   void SjisToShinonome16FontRead_ALL(File f1, File f2, uint8_t Direction, int16_t Angle, uint8_t* Sjis, uint16_t sj_length, uint8_t font_buf[][16]);
   void SjisToShinonomeFNTadrs(uint8_t jisH, uint8_t jisL, uint32_t* fnt_adrs);
   void SD_Flash_ShinonomeFNTread_FHN(File ff, uint32_t addrs, uint8_t* buf1, uint8_t* buf2);
   void SD_Flash_ShinonomeFNTread_Harf_FHN(File ff, uint32_t addrs, uint8_t* buf);
-	
+  
 private:
-	uint8_t _cs;
-	uint16_t _MaxTxt;
-	File _UtoS;
-	File _SinoZ;
-	File _SinoH;
-	SD_UTF8toSJIS _u8ts;
+  uint8_t _cs;
+  uint16_t _MaxTxt;
+  File _UtoS;
+  File _SinoZ;
+  File _SinoH;
+  SD_UTF8toSJIS _u8ts;
 };
 
 #endif

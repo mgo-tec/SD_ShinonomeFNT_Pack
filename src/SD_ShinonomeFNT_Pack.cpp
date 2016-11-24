@@ -27,7 +27,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 Licence of Shinonome Font is Public Domain.
 Maintenance development of Font is /efont/.
 */
@@ -42,39 +41,39 @@ SD_ShinonomeFNT_Pack::SD_ShinonomeFNT_Pack(uint8_t cs, uint16_t MaxTxt)
 //*******************東雲フォントライブラリ初期化*************************************************************
 void SD_ShinonomeFNT_Pack::SD_Shinonome_Init(const char* UTF8SJIS_file, const char* Shino_Half_Font_file, const char* Shino_Zen_Font_file)
 {
-	Serial.begin(115200);
-	SPI.begin();  
+  Serial.begin(115200);
+  SPI.begin();  
   SPI.setFrequency(40000000);
   SPI.setDataMode(SPI_MODE0); //SDカードはMODE0
-	
-	SD.begin(_cs,40000000);
-    
+  
+  SD.begin(_cs,40000000);
+  
   Serial.println("card initialized.");
   _UtoS = SD.open(UTF8SJIS_file, FILE_READ);
   if (_UtoS == NULL) {
-		Serial.print(UTF8SJIS_file);
+    Serial.print(UTF8SJIS_file);
     Serial.println(" File not found");
     return;
   }else{
-		Serial.print(UTF8SJIS_file);
+    Serial.print(UTF8SJIS_file);
     Serial.println(" File read OK!");
   }
   _SinoH = SD.open(Shino_Half_Font_file, FILE_READ);
   if (_SinoH == NULL) {
-		Serial.print(Shino_Half_Font_file);
+    Serial.print(Shino_Half_Font_file);
     Serial.print(" File not found");
     return;
   }else{
-		Serial.print(Shino_Half_Font_file);
+    Serial.print(Shino_Half_Font_file);
     Serial.println(" File read OK!");
   }
   _SinoZ = SD.open(Shino_Zen_Font_file, FILE_READ);
   if (_SinoZ == NULL) {
-		Serial.print(Shino_Zen_Font_file);
+    Serial.print(Shino_Zen_Font_file);
     Serial.print(" File not found");
     return;
   }else{
-		Serial.print(Shino_Zen_Font_file);
+    Serial.print(Shino_Zen_Font_file);
     Serial.println(" File read OK!");
   }
 }
@@ -82,28 +81,28 @@ void SD_ShinonomeFNT_Pack::SD_Shinonome_Init(const char* UTF8SJIS_file, const ch
 //*******************東雲フォント全変換*************************
 uint16_t SD_ShinonomeFNT_Pack::ShinonomeFNTread_ALL(String str, uint8_t font_buf[][16])
 {
-	uint8_t sj_txt[_MaxTxt];
-	uint16_t sj_length;
-	
-	SPI.setFrequency(40000000); //他のデバイスの速度やモードが異なるため、毎回呼び出す。
-	SPI.setDataMode(SPI_MODE0);
-	
-	_u8ts.UTF8_to_SJIS_str_cnv(_UtoS, str, sj_txt, &sj_length);
-	SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(_SinoZ, _SinoH, 0, 0, sj_txt, sj_length, font_buf);
-	return sj_length;
+  uint8_t sj_txt[_MaxTxt];
+  uint16_t sj_length;
+  
+  SPI.setFrequency(40000000); //他のデバイスの速度やモードが異なるため、毎回呼び出す。
+  SPI.setDataMode(SPI_MODE0);
+  
+  _u8ts.UTF8_to_SJIS_str_cnv(_UtoS, str, sj_txt, &sj_length);
+  SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(_SinoZ, _SinoH, 0, 0, sj_txt, sj_length, font_buf);
+  return sj_length;
 }
 
 //*******************東雲フォント全変換（Shift_JISコード返りあり）*************************
 uint16_t SD_ShinonomeFNT_Pack::SjisShinonomeFNTread_ALL(String str, uint8_t* sj_code, uint8_t font_buf[][16])
 {
-	uint16_t sj_length;
-	
-	SPI.setFrequency(40000000); //他のデバイスの速度やモードが異なるため、毎回呼び出す。
-	SPI.setDataMode(SPI_MODE0);
-	
-	_u8ts.UTF8_to_SJIS_str_cnv(_UtoS, str, sj_code, &sj_length);
-	SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(_SinoZ, _SinoH, 0, 0, sj_code, sj_length, font_buf);
-	return sj_length;
+  uint16_t sj_length;
+  
+  SPI.setFrequency(40000000); //他のデバイスの速度やモードが異なるため、毎回呼び出す。
+  SPI.setDataMode(SPI_MODE0);
+  
+  _u8ts.UTF8_to_SJIS_str_cnv(_UtoS, str, sj_code, &sj_length);
+  SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(_SinoZ, _SinoH, 0, 0, sj_code, sj_length, font_buf);
+  return sj_length;
 }
 
 //*******************東雲フォント１文字変換*************************************************************
@@ -148,9 +147,9 @@ void SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(File f1, File f2, uint8
   uint16_t fnt_adrs_half = 0x1346; //space
   uint32_t fnt_adrs_Zen = 0x467; //Space
   uint16_t i = 0;
-	
-	SPI.setFrequency(40000000); //他のデバイスの速度やモードが異なるため、毎回呼び出す。
-	SPI.setDataMode(SPI_MODE0);
+  
+  SPI.setFrequency(40000000); //他のデバイスの速度やモードが異なるため、毎回呼び出す。
+  SPI.setDataMode(SPI_MODE0);
   
   while(i < sj_length){
     if(Sjis[i] < 0x20) Sjis[i] = 0x20; //制御コードは全てスペース
@@ -179,7 +178,7 @@ void SD_ShinonomeFNT_Pack::SjisToShinonome16FontRead_ALL(File f1, File f2, uint8
       SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_FHN(f1, fnt_adrs_Zen, font_buf[i], font_buf[i+1]);
       i = i+2;
     }
-		yield();
+    yield();
   }
 }
 //*******************Shift_JISコードから東雲フォントアドレス計算********************************************
